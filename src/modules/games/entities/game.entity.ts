@@ -53,6 +53,6 @@ export class Game {
   @JoinColumn({ name: 'developer_id' })
   developer: User;
 
-  @OneToMany(() => Image, (image) => image.game_id)
+  @OneToMany(() => Image, (image) => image.game)
   images: Image[];
 }

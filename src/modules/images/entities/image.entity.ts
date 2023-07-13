@@ -28,9 +28,7 @@ export class Image {
   @Column()
   game_id: number;
 
-/*
-  @ManyToOne(() => Game, (game) => game.images)
+  @ManyToOne(() => Game, (game) => game.game_id)
   @JoinColumn({ name: 'game_id' })
   game: Game;
-*/
 }
