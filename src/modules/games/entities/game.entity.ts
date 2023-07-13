@@ -9,6 +9,7 @@ import {
   PrimaryGeneratedColumn
 } from 'typeorm';
 import { CreateGameDto } from '../dto/create-game.dto';
+import { BuildVersion } from './build-version.entity';
 import { Image } from '../../images/entities/image.entity';
 import { Genre } from '../../genres/entities/genre.entity';
 import { User } from '../../users/entities/user.entity';
@@ -65,6 +66,9 @@ export class Game {
 
   @OneToMany(() => Image, (image) => image.game)
   images: Image[];
+
+  @OneToMany(() => BuildVersion, (build) => build.game)
+  builds: BuildVersion[];
 
   @ManyToMany(() => Genre)
   @JoinTable({

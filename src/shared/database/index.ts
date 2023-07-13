@@ -3,13 +3,19 @@ import { Image } from "../../modules/images/entities/image.entity";
 import { Game } from "../../modules/games/entities/game.entity";
 import { Genre } from "../../modules/genres/entities/genre.entity";
 import { User } from "../../modules/users/entities/user.entity";
-//import { BuildVersion } from "../../modules/build_versions/entities/build_version.entity";
+import { BuildVersion } from "../../modules/games/entities/build-version.entity";
 
 export const DATABASE_CONFIGS = <TypeOrmModuleAsyncOptions>{
   useFactory: async () => {
     let dbConnectionInfo;
 
-    const entitiesList = [ Image, Game, Genre, User ];
+    const entitiesList = [
+      BuildVersion,
+      Image,
+      Game,
+      Genre,
+      User
+    ];
 
     if (process.env.NODE_ENV === 'test') {
        dbConnectionInfo = {
