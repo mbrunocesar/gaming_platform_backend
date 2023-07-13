@@ -1,6 +1,16 @@
-import { Column, Entity, JoinColumn, OneToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  OneToMany,
+  ManyToOne,
+  ManyToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import { CreateGameDto } from '../dto/create-game.dto';
 import { Image } from '../../images/entities/image.entity';
+import { Genre } from '../../genres/entities/genre.entity';
 import { User } from '../../users/entities/user.entity';
 
 @Entity({ name: 'Games' })
@@ -55,4 +65,18 @@ export class Game {
 
   @OneToMany(() => Image, (image) => image.game)
   images: Image[];
+
+  @ManyToMany(() => Genre)
+  @JoinTable({
+    name: 'GameGenres',
+    joinColumn: {
+      name: 'game_id',
+      referencedColumnName: 'game_id',
+    },
+    inverseJoinColumn: {
+      name: 'genre_id',
+      referencedColumnName: 'genre_id',
+    },
+  })
+  genres: Genre[];
 }

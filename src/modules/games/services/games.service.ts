@@ -22,7 +22,7 @@ export class GamesService {
   async findOne(
     gameId: number,
   ): Promise<Game[]> {
-    return this.gamesRepository.findOne(gameId, ['images', 'developer']);
+    return this.gamesRepository.findOne(gameId, ['images', 'developer', 'genres']);
   }
 
   async findAll(
