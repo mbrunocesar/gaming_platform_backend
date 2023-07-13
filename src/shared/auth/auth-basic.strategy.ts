@@ -5,7 +5,9 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class BasicStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly configService: ConfigService) {
+  constructor(
+    private readonly configService: ConfigService
+  ) {
     super({
       passReqToCallback: true,
     });
@@ -21,4 +23,5 @@ export class BasicStrategy extends PassportStrategy(Strategy) {
 
     throw new UnauthorizedException();
   };
+
 }

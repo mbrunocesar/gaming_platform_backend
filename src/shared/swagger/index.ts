@@ -11,7 +11,7 @@ export class SetupSwagger {
       .setTitle('Gaming Platform')
       .setDescription('Implementation Challenge of Gaming Platform')
       .setVersion('1.0')
-      .addBasicAuth()
+      .addBearerAuth()
       .build();
     const document = SwaggerModule.createDocument(this.app, config);
 
