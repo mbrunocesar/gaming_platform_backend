@@ -19,6 +19,12 @@ export class GamesService {
     return { id: game.game_id };
   }
 
+  async findOne(
+    gameId: number,
+  ): Promise<Game[]> {
+    return this.gamesRepository.findOne(gameId, ['images', 'developer']);
+  }
+
   async findAll(
     paginateRequestDto: PaginateRequestDto,
   ): Promise<IPaginate<Game>> {

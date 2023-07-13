@@ -29,4 +29,8 @@ export class GamesRepository
   findAndCount(options?: IFindManyOptions): Promise<[Game[], number]> {
     return this.gamesRepository.findAndCount(options);
   }
+
+  findOne(gameId: number, relations?: string[]): Promise<Game[]> {
+    return this.gamesRepository.find({ where: { game_id: gameId }, relations });
+  }
 }
