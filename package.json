@@ -1,7 +1,7 @@
 {
-  "name": "oppaiman-challenge",
-  "version": "0.0.1",
-  "description": "OppaiMan code challenge",
+  "name": "gaming-platform-backend",
+  "version": "0.1.0",
+  "description": "OppaiMan - Gaming Platform Code Challenge",
   "author": "Bruno Cesar",
   "private": true,
   "license": "UNLICENSED",
