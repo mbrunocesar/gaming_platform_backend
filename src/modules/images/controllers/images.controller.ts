@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, UploadedFile, UseInterceptors, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+  Query
+} from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth } from '@nestjs/swagger';
+
 import { FileInterceptor } from "@nestjs/platform-express";
 
 import { ImagesService } from '../services/images.service';
@@ -10,12 +22,16 @@ export class ImagesController {
   constructor(private readonly imagesService: ImagesService) {}
 
   @Post()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   create(@Body() createImageDto: CreateImageDto) {
     return this.imagesService.create(createImageDto);
   }
 
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
   async uploadFile(@UploadedFile() file) {
     if (!file) {
       return new Error('422 - Unprocessable Entity');
@@ -24,7 +40,6 @@ export class ImagesController {
 
     return uploadedFile;
   }
-
 
   @Get()
   findAll(@Query() paginateRequestDto: PaginateRequestDto) {

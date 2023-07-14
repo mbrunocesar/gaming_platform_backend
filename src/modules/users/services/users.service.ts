@@ -44,7 +44,7 @@ export class UsersService {
         expiresIn: '3600s',
       },
     );
-    return access_token;
+    return { bearer: access_token };
   }
 
   async findAll(
