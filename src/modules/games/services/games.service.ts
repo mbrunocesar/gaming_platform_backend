@@ -6,15 +6,20 @@ import { CreateGameDto } from '../dto/create-game.dto';
 import { Game } from '../entities/game.entity';
 import { IGamesRepository } from '../repositories/i-games-repository';
 
+import { ImagesService } from '../../images/services/images.service';
+
 @Injectable()
 export class GamesService {
   constructor(
     @InjectRepository(Game)
     private gamesRepository: IGamesRepository,
+    private readonly imagesService: ImagesService
   ) {}
 
   async create(createGameDto: CreateGameDto) {
     const game = await this.gamesRepository.save(createGameDto);
+
+    await this.imagesService.linkToGame(createGameDto.image_ids, game.game_id);
 
     return { id: game.game_id };
   }

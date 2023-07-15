@@ -6,6 +6,7 @@ import { Game } from './entities/game.entity';
 import { GamesRepository } from './repositories/games-repository';
 import { Image } from '../images/entities/image.entity';
 import { ImagesRepository } from '../images/repositories/images-repository';
+import { ImagesService } from '../images/services/images.service';
 import { User } from '../users/entities/user.entity';
 import { UsersRepository } from '../users/repositories/users-repository';
 
@@ -14,6 +15,7 @@ import { UsersRepository } from '../users/repositories/users-repository';
   controllers: [GamesController],
   providers: [
     GamesService,
+    ImagesService,
     {
       provide: getRepositoryToken(Game),
       useClass: GamesRepository,

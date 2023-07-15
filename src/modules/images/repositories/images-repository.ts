@@ -1,7 +1,7 @@
 import { InjectConnection } from '@nestjs/typeorm';
 import { BaseRepository } from '@shared/base-repository/base-repository';
 import { IFindManyOptions } from '@shared/base-repository/helpers/paginate-helper/i-paginate';
-import { Connection, Repository } from 'typeorm';
+import { Connection, In, Repository } from 'typeorm';
 import { CreateImageDto } from '../dto/create-image.dto';
 import { Image } from '../entities/image.entity';
 import { IImagesRepository } from './i-images-repository';
@@ -20,6 +20,10 @@ export class ImagesRepository
 
   create(createImageDto: CreateImageDto): Image {
     return this.imagesRepository.create(createImageDto);
+  }
+
+  linkToGame(imageIds: number[], gameId: number) {
+    return this.imagesRepository.update({ image_id: In(imageIds) }, { game_id: gameId });
   }
 
   save(image: Image | CreateImageDto): Promise<Image> {

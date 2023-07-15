@@ -37,6 +37,11 @@ export class ImagesService {
     return fileStorageInDB;
   }
 
+  async linkToGame(imageIds: number[], gameId: number) {
+    const links = await this.imagesRepository.linkToGame(imageIds, gameId);
+
+    return links;
+  }
 
   async findAll(
     paginateRequestDto: PaginateRequestDto,

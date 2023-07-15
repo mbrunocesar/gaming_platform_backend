@@ -36,4 +36,7 @@ export class CreateGameDto {
 
   @ApiProperty({ description: 'The game creator.' })
   developer_id: number;
+
+  @ApiProperty({ description: 'The game creator.' })
+  image_ids: number[];
 }

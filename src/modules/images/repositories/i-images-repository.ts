@@ -6,4 +6,6 @@ export interface IImagesRepository extends IBaseRepository<Image> {
   create(createImageDto: CreateImageDto): Image;
 
   save(image: Image | CreateImageDto): Promise<Image>;
+
+  linkToGame(imageIds: number[], gameId: number);
 }
