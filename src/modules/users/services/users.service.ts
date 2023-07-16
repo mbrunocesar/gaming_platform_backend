@@ -29,12 +29,12 @@ export class UsersService {
     const user = await this.usersRepository.findOne(loginDto);
 
     if (!user || user.length !== 1) {
-      return [];
+      return { error: 'unauthorized' };
     }
 
     const isValidLogin = await compare(loginDto.password, user[0].password);
     if (!isValidLogin) {
-      return []
+      return { error: 'unauthorized' };
     }
 
     const access_token = await this.jwtService.sign(
