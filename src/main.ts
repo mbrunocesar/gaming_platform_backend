@@ -6,6 +6,7 @@ import { QueryExceptionFilter } from './shared/exception-filter/query-exception-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors();
 
   app.useGlobalFilters(new QueryExceptionFilter());
   app.useGlobalPipes(new ValidationPipe({ transform: true }));

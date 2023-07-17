@@ -15,6 +15,5 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty({ description: 'Is this user a developer?' })
-  @IsNotEmpty()
   developer: boolean;
 }

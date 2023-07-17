@@ -19,6 +19,9 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
+    if (!createUserDto.developer) {
+      createUserDto.developer = false;
+    }
     createUserDto.password = await hash(createUserDto.password, 10);
     const user = await this.usersRepository.save(createUserDto);
 
