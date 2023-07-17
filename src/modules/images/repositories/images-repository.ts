@@ -22,15 +22,15 @@ export class ImagesRepository
     return this.imagesRepository.create(createImageDto);
   }
 
-  linkToGame(imageIds: number[], gameId: number) {
-    return this.imagesRepository.update({ image_id: In(imageIds) }, { game_id: gameId });
-  }
-
   save(image: Image | CreateImageDto): Promise<Image> {
     return this.imagesRepository.save(image);
   }
 
   findAndCount(options?: IFindManyOptions): Promise<[Image[], number]> {
     return this.imagesRepository.findAndCount(options);
+  }
+
+  linkToGame(imageIds: number[], gameId: number) {
+    return this.imagesRepository.update({ image_id: In(imageIds) }, { game_id: gameId });
   }
 }

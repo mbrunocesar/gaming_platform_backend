@@ -6,6 +6,7 @@ import { CreateGameDto } from '../dto/create-game.dto';
 import { Game } from '../entities/game.entity';
 import { IGamesRepository } from '../repositories/i-games-repository';
 
+import { GenresService } from '../../genres/services/genres.service';
 import { ImagesService } from '../../images/services/images.service';
 
 @Injectable()
@@ -13,13 +14,23 @@ export class GamesService {
   constructor(
     @InjectRepository(Game)
     private gamesRepository: IGamesRepository,
+    private readonly genresService: GenresService,
     private readonly imagesService: ImagesService
   ) {}
 
   async create(createGameDto: CreateGameDto) {
     const game = await this.gamesRepository.save(createGameDto);
 
-    await this.imagesService.linkToGame(createGameDto.image_ids, game.game_id);
+
+    if (createGameDto.genre_ids && createGameDto.genre_ids.length > 0) {
+      const genres = await this.genresService.findByIds(createGameDto.genre_ids);
+      game.genres = genres;
+      await this.gamesRepository.save(game);
+    }
+
+    if (createGameDto.image_ids && createGameDto.image_ids.length > 0) {
+      await this.imagesService.linkToGame(createGameDto.image_ids, game.game_id);
+    }
 
     return { id: game.game_id };
   }

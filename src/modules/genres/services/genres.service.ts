@@ -17,4 +17,8 @@ export class GenresService {
     return this.genresRepository.paginate(paginateRequestDto);
   }
 
+  async findByIds(genreIds: number[]) : Promise<Genre[]> {
+    return this.genresRepository.findByIds(genreIds);
+  }
+
 }

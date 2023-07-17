@@ -4,4 +4,6 @@ import { Genre } from '../entities/genre.entity';
 
 export interface IGenresService {
   findAll(paginateRequestDto: PaginateRequestDto): Promise<IPaginate<Genre>>;
+
+  findByIds(genreIds: number[]): Promise<Genre[]>;
 }
