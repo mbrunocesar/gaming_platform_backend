@@ -36,7 +36,7 @@ export class GamesService {
 
   async findOne(
     gameId: number,
-  ): Promise<Game[]> {
+  ): Promise<Game> {
     return this.gamesRepository.findOne(gameId, ['images', 'genres', 'builds']);
   }
 

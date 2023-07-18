@@ -7,5 +7,5 @@ export interface IGamesRepository extends IBaseRepository<Game> {
 
   save(game: Game | CreateGameDto): Promise<Game>;
 
-  findOne(gameId: number, relations?: string[]): Promise<Game[]>;
+  findOne(gameId: number, relations?: string[]): Promise<Game>;
 }

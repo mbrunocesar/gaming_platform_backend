@@ -30,7 +30,7 @@ export class GamesRepository
     return this.gamesRepository.findAndCount(options);
   }
 
-  findOne(gameId: number, relations?: string[]): Promise<Game[]> {
-    return this.gamesRepository.find({ where: { game_id: gameId }, relations });
+  findOne(gameId: number, relations?: string[]): Promise<Game> {
+    return this.gamesRepository.findOne({ where: { game_id: gameId }, relations });
   }
 }
