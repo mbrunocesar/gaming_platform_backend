@@ -1,5 +1,14 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  OneToMany,
+  ManyToMany,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import { CreateUserDto } from '../dto/create-user.dto';
+
+import { Game } from '../../games/entities/game.entity';
 
 @Entity({ name: 'Users' })
 export class User {
@@ -25,5 +34,19 @@ export class User {
   password: string;
 
   @Column('bool')
-  developer: boolean
+  developer: boolean;
+
+  @ManyToMany(() => Game)
+  @JoinTable({
+    name: 'ClientGames',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'user_id',
+    },
+    inverseJoinColumn: {
+      name: 'game_id',
+      referencedColumnName: 'game_id',
+    },
+  })
+  games: Game[];
 }

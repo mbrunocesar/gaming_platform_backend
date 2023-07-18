@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, UseGuards, Query } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { PaginateRequestDto } from '@shared/base-repository/helpers/paginate-helper/dto/paginate-request.dto';
 import { UsersService } from '../services/users.service';
+import { AcquireGameDto } from '../dto/acquire-game.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginDto } from '../dto/login.dto';
-import { PaginateRequestDto } from '@shared/base-repository/helpers/paginate-helper/dto/paginate-request.dto';
 
 @Controller('users')
 export class UsersController {
@@ -15,15 +16,22 @@ export class UsersController {
     return this.usersService.login(loginDto);
   }
 
-  @Post()
+  @Post('/signup')
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
+  @Post('/acquire-game')
   @UseGuards(AuthGuard('jwt'))
   @ApiBearerAuth()
-  findAll(@Query() paginateRequestDto: PaginateRequestDto) {
-    return this.usersService.findAll(paginateRequestDto);
+  acquireGame(@Body() acquireGameDto: AcquireGameDto) {
+    return this.usersService.acquireGame(acquireGameDto);
+  }
+
+  @Get('/:id/games')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  listAcquiredGame(@Param('id') id: number) {
+    return this.usersService.listAcquiredGames(id);
   }
 }

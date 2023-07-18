@@ -8,5 +8,7 @@ export interface IUsersRepository extends IBaseRepository<User> {
 
   save(user: User | CreateUserDto): Promise<User>;
 
-  findOne(loginDto: LoginDto, relations?: string[]): Promise<User[]>;
+  findOne(user_id: number, relations?: string[]): Promise<User>;
+
+  findLogin(loginDto: LoginDto, relations?: string[]): Promise<User>;
 }

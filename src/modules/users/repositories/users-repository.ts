@@ -31,7 +31,11 @@ export class UsersRepository
     return this.usersRepository.findAndCount(options);
   }
 
-  findOne(loginDto: LoginDto, relations?: string[]): Promise<User[]> {
-    return this.usersRepository.find({ where: { email: loginDto.email }, relations });
+  findOne(user_id: number, relations?: string[]): Promise<User> {
+    return this.usersRepository.findOne({ where: { user_id: user_id }, relations });
+  }
+
+  findLogin(loginDto: LoginDto, relations?: string[]): Promise<User> {
+    return this.usersRepository.findOne({ where: { email: loginDto.email }, relations });
   }
 }

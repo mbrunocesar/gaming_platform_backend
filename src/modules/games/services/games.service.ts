@@ -21,7 +21,6 @@ export class GamesService {
   async create(createGameDto: CreateGameDto) {
     const game = await this.gamesRepository.save(createGameDto);
 
-
     if (createGameDto.genre_ids && createGameDto.genre_ids.length > 0) {
       const genres = await this.genresService.findByIds(createGameDto.genre_ids);
       game.genres = genres;
@@ -44,6 +43,6 @@ export class GamesService {
   async findAll(
     paginateRequestDto: PaginateRequestDto,
   ): Promise<IPaginate<Game>> {
-    return this.gamesRepository.paginate(paginateRequestDto, ['images']);
+    return this.gamesRepository.paginate(paginateRequestDto, ['images', 'genres']);
   }
 }

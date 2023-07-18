@@ -3,9 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateRequestDto } from '@shared/base-repository/helpers/paginate-helper/dto/paginate-request.dto';
 import { IPaginate } from '@shared/base-repository/helpers/paginate-helper/i-paginate';
 import { JwtService } from '@nestjs/jwt';
+import { AcquireGameDto } from '../dto/acquire-game.dto';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { LoginDto } from '../dto/login.dto';
 import { User } from '../entities/user.entity';
+import { Game } from '../../games/entities/game.entity';
 import { IUsersRepository } from '../repositories/i-users-repository';
 import { hash, compare } from 'bcryptjs';
 
@@ -28,31 +30,43 @@ export class UsersService {
     return { id: user.user_id };
   }
 
-  async login(loginDto: LoginDto) {
-    const user = await this.usersRepository.findOne(loginDto);
+  async acquireGame(acquireGameDto: AcquireGameDto) {
 
-    if (!user || user.length !== 1) {
+  }
+
+  async listAcquiredGames(user_id: number) {
+    const user = await this.usersRepository.findOne(user_id, ['games']);
+
+    if (!user) {
       return { error: 'unauthorized' };
     }
 
-    const isValidLogin = await compare(loginDto.password, user[0].password);
+    return user.games;
+  }
+
+  async login(loginDto: LoginDto) {
+    const user = await this.usersRepository.findLogin(loginDto);
+
+    if (!user) {
+      return { error: 'unauthorized' };
+    }
+
+    const isValidLogin = await compare(loginDto.password, user.password);
     if (!isValidLogin) {
       return { error: 'unauthorized' };
     }
 
     const access_token = await this.jwtService.sign(
-      { email: loginDto.email },
+      {
+        id: user.user_id,
+        email: user.email,
+        developer: user.developer,
+      },
       {
         secret: process.env.JWT_SECRET_KEY,
         expiresIn: '3600s',
       },
     );
     return { bearer: access_token };
-  }
-
-  async findAll(
-    paginateRequestDto: PaginateRequestDto,
-  ): Promise<IPaginate<User>> {
-    return this.usersRepository.paginate(paginateRequestDto);
   }
 }
