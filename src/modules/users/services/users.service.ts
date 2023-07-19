@@ -31,7 +31,13 @@ export class UsersService {
   }
 
   async acquireGame(acquireGameDto: AcquireGameDto) {
+    const user = await this.usersRepository.findOne(acquireGameDto.user_id, ['games']);
 
+    const game = new Game();
+    game.game_id = acquireGameDto.game_id;
+    user.games.push(game);
+
+    return await this.usersRepository.save(user);
   }
 
   async listAcquiredGames(user_id: number) {
