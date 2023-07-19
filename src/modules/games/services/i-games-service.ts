@@ -6,7 +6,7 @@ import { Game } from '../entities/game.entity';
 export interface IGamesService {
   create(createGameDto: CreateGameDto): Promise<{ id: number }>;
 
-  findOne(gameId: number): Promise<Game>;
+  findAll(): Promise<Game[]>;
 
-  findAll(paginateRequestDto: PaginateRequestDto): Promise<IPaginate<Game>>;
+  findOne(gameId: number): Promise<Game>;
 }

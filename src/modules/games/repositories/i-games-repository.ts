@@ -7,5 +7,9 @@ export interface IGamesRepository extends IBaseRepository<Game> {
 
   save(game: Game | CreateGameDto): Promise<Game>;
 
+  findAll(relations?: string[]): Promise<Game[]>;
+
   findOne(gameId: number, relations?: string[]): Promise<Game>;
+
+  findByFilters(filters, relations?: string[]): Promise<Game[]>;
 }

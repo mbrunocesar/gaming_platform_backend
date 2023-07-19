@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PaginateRequestDto } from '@shared/base-repository/helpers/paginate-helper/dto/paginate-request.dto';
 import { IPaginate } from '@shared/base-repository/helpers/paginate-helper/i-paginate';
 import { CreateGameDto } from '../dto/create-game.dto';
+import { FiltersDto } from '../dto/filters.dto';
 import { Game } from '../entities/game.entity';
 import { IGamesRepository } from '../repositories/i-games-repository';
 
@@ -34,15 +35,20 @@ export class GamesService {
     return { id: game.game_id };
   }
 
-  async findOne(
-    gameId: number,
-  ): Promise<Game> {
+  async findOne(gameId: number): Promise<Game> {
     return this.gamesRepository.findOne(gameId, ['images', 'genres', 'builds']);
   }
 
-  async findAll(
-    paginateRequestDto: PaginateRequestDto,
-  ): Promise<IPaginate<Game>> {
-    return this.gamesRepository.paginate(paginateRequestDto, ['images', 'genres']);
+  async findAll(): Promise<Game[]> {
+    return this.gamesRepository.findAll(['images', 'genres']);
+  }
+
+
+// - Implementar busca por nome do jogo.
+// - Implementar filtros por gênero, preço e data.
+  async findByFilters(filtersDto: FiltersDto): Promise<Game[]> {
+    const games = this.gamesRepository.findByFilters(filtersDto, ['images', 'genres']);
+
+    return games;
   }
 }

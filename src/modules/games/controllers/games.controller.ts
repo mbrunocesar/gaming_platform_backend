@@ -3,7 +3,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { GamesService } from '../services/games.service';
 import { CreateGameDto } from '../dto/create-game.dto';
-import { PaginateRequestDto } from '@shared/base-repository/helpers/paginate-helper/dto/paginate-request.dto';
+import { FiltersDto } from '../dto/filters.dto';
 
 @Controller('games')
 export class GamesController {
@@ -17,8 +17,13 @@ export class GamesController {
   }
 
   @Get()
-  findAll(@Query() paginateRequestDto: PaginateRequestDto) {
-    return this.gamesService.findAll(paginateRequestDto);
+  findAll() {
+    return this.gamesService.findAll();
+  }
+
+  @Get('/filters')
+  findByFilters(@Query() filtersDto: FiltersDto) {
+    return this.gamesService.findByFilters(filtersDto);
   }
 
   @Get('/:id')
